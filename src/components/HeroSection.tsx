@@ -20,7 +20,7 @@ export default function HeroSection() {
   const yStats = useTransform(scrollY, [0, 500], [0, 50]);
   const opacityStats = useTransform(scrollY, [0, 400], [1, 0.2]);
   
-  const spring = { type: "spring", stiffness: 100, damping: 20 };
+  const spring = { type: "spring" as const, stiffness: 100, damping: 20 };
 
   return (
     <section
