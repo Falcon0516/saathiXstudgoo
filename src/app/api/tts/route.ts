@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
  * Keeps the API key secure — never exposed to the client.
  */
 
-const SARVAM_API_KEY = "sk_rurrqm8i_M5TeMWiTrusZTfkC7QXOF0jM";
+const SARVAM_API_KEY = process.env.SARVAM_API_KEY || "";
 const SARVAM_TTS_URL = "https://api.sarvam.ai/text-to-speech";
 
 export async function POST(req: NextRequest) {
