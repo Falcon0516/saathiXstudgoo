@@ -29,10 +29,37 @@ const timeline = [
   { week: "Week 4", title: "Shadow Pilot & Go-Live", tasks: ["50 live job matches in shadow mode", "End-to-end masked calls verified", "Full commercial deployment"], color: "#FF9F0A" },
 ];
 
-const pricing = [
-  { title: "Pay-Per-Match", subtitle: "Performance Model", price: "₹20–₹50", unit: "per successful match", features: ["Zero upfront cost", "Aligned with revenue events", "Lowest risk entry point"], recommended: true },
-  { title: "Usage-Based", subtitle: "API Model", price: "₹4,999", unit: "/mo + per-minute fees", features: ["Portal access included", "Per-call & per-ping billing", "Full masked routing"], recommended: false },
-  { title: "Volume Retainer", subtitle: "Enterprise Tier", price: "₹14,999", unit: "/mo (up to 2,000 matches)", features: ["Predictable OPEX", "Priority support", "Guaranteed SLA"], recommended: false },
+const partnerships = [
+  {
+    title: "Starter Pack",
+    subtitle: "Pay-Per-Call",
+    tagline: "Usage-Based Billing",
+    highlight: "Per Call",
+    description: "Pay only for what you use — billed per successful AI call.",
+    features: ["No minimum commitment", "Full masked call routing", "Real-time dashboard access", "Ideal for pilot programs"],
+    recommended: false,
+    icon: "📞",
+  },
+  {
+    title: "Growth Plan",
+    subtitle: "Subscription",
+    tagline: "Most Popular",
+    highlight: "100 calls/day",
+    description: "Fixed daily quota with rollover. Scale as you grow.",
+    features: ["100 calls/day or 1,000/week", "Priority candidate matching", "Dedicated account manager", "Volume discounts on overages"],
+    recommended: true,
+    icon: "🚀",
+  },
+  {
+    title: "Enterprise",
+    subtitle: "Unlimited",
+    tagline: "Full Scale",
+    highlight: "Unlimited",
+    description: "Unlimited calls per day, week, or month — no caps.",
+    features: ["Unlimited AI calls", "Custom SLA & uptime guarantee", "White-label option available", "Dedicated infra & priority routing"],
+    recommended: false,
+    icon: "🏢",
+  },
 ];
 
 const spring = { type: "spring" as const, damping: 20, stiffness: 100 };
@@ -169,15 +196,15 @@ export default function AdvantagesSection() {
           </div>
         </motion.div>
 
-        {/* ── Pricing ── */}
+        {/* ── Partnership Models ── */}
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ...spring }}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <h3 className="heading-section" style={{ fontSize: "clamp(22px, 3vw, 36px)", marginBottom: 12 }}>Flexible Partnership Models</h3>
-            <p className="body-large">Choose the structure that aligns with your growth stage.</p>
+            <p className="body-large" style={{ color: "var(--text-secondary)", maxWidth: 600, margin: "0 auto" }}>Choose the structure that aligns with your growth stage — like picking a mobile plan.</p>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, maxWidth: 1000, margin: "0 auto" }}>
-            {pricing.map((plan, i) => (
+            {partnerships.map((plan, i) => (
               <motion.div key={plan.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5, ...spring }}
                 className={plan.recommended ? "glass aurora-border" : "glass"}
                 style={{
@@ -194,16 +221,17 @@ export default function AdvantagesSection() {
                     padding: "6px 20px", borderRadius: 999, fontSize: 11, fontWeight: 700,
                     color: "white", boxShadow: "0 4px 12px rgba(41,151,255,0.3)",
                   }}>
-                    Recommended
+                    {plan.tagline}
                   </div>
                 )}
-                <div style={{ textAlign: "center", marginBottom: 32 }}>
+                <div style={{ textAlign: "center", marginBottom: 28 }}>
+                  <div style={{ fontSize: 40, marginBottom: 12 }}>{plan.icon}</div>
                   <h4 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.02em" }}>{plan.title}</h4>
                   <p style={{ fontSize: 13, color: "var(--text-secondary)", marginTop: 4 }}>{plan.subtitle}</p>
-                  <div style={{ marginTop: 24 }}>
-                    <span style={{ fontSize: 40, fontWeight: 900, color: "#2997FF", letterSpacing: "-0.03em" }}>{plan.price}</span>
-                    <span style={{ fontSize: 13, color: "var(--text-secondary)", marginLeft: 6 }}>{plan.unit}</span>
+                  <div style={{ marginTop: 20, padding: "10px 24px", borderRadius: 999, display: "inline-block", background: "rgba(14,165,233,0.08)", border: "1px solid rgba(14,165,233,0.15)" }}>
+                    <span style={{ fontSize: 24, fontWeight: 900, color: "#0EA5E9", letterSpacing: "-0.02em" }}>{plan.highlight}</span>
                   </div>
+                  <p style={{ fontSize: 13, color: "var(--text-tertiary)", marginTop: 12, lineHeight: 1.5 }}>{plan.description}</p>
                 </div>
                 <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 14, margin: 0 }}>
                   {plan.features.map((f) => (
@@ -216,6 +244,15 @@ export default function AdvantagesSection() {
               </motion.div>
             ))}
           </div>
+
+          {/* Disclaimer Note */}
+          <p style={{
+            textAlign: "center", fontSize: 12, color: "var(--text-tertiary)",
+            marginTop: 32, maxWidth: 600, margin: "32px auto 0",
+            fontStyle: "italic", lineHeight: 1.6,
+          }}>
+            * Pricing details shared upon partnership discussion. Plans may include additional service, integration &amp; maintenance fees. Custom plans available on request.
+          </p>
         </motion.div>
       </div>
     </section>
