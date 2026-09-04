@@ -244,6 +244,46 @@ export default function AdvantagesSection() {
               </motion.div>
             ))}
           </div>
+          {/* ── Flexible Add-On Packs ── */}
+          <div style={{ marginTop: 48, maxWidth: 1000, margin: "48px auto 0" }}>
+            <p style={{ textAlign: "center", fontSize: 14, fontWeight: 700, color: "var(--text-secondary)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
+              More Flexible Options
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 16 }}>
+              {[
+                { label: "Weekly Pack", calls: "500 calls/week", desc: "Great for seasonal demand", icon: "📅" },
+                { label: "Monthly Bundle", calls: "5,000 calls/mo", desc: "Best value for steady ops", icon: "📦" },
+                { label: "Night Owl", calls: "Unlimited 8PM–8AM", desc: "Off-peak support coverage", icon: "🌙" },
+                { label: "Custom Plan", calls: "You decide", desc: "Build your own call quota", icon: "⚙️" },
+              ].map((pack) => (
+                <motion.div
+                  key={pack.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, ...spring }}
+                  style={{
+                    padding: "20px 24px",
+                    borderRadius: 20,
+                    background: "var(--surface)",
+                    border: "1px solid var(--border)",
+                    display: "flex", alignItems: "center", gap: 16,
+                    transition: "all 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+                    cursor: "default",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(14,165,233,0.35)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <span style={{ fontSize: 28, flexShrink: 0 }}>{pack.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }}>{pack.label}</div>
+                    <div style={{ fontSize: 15, fontWeight: 800, color: "#0EA5E9", marginTop: 2 }}>{pack.calls}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-tertiary)", marginTop: 2 }}>{pack.desc}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
 
           {/* Disclaimer Note */}
           <p style={{
