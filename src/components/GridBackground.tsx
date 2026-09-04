@@ -1,21 +1,14 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 
 /* ─── Config ─── */
-const GRID_SPACING = 44;
+const GRID_SPACING = 48;
 const DOT_BASE_RADIUS = 1.2;
-const CURSOR_RADIUS = 160;
-const CONNECTION_DIST = 90;
-const PARTICLE_COUNT = 20;
-const FLOW_STRENGTH = 12; // How far dots displace
-
-interface GridDot {
-  ox: number; // original x
-  oy: number; // original y
-  x: number;  // current x (displaced)
-  y: number;  // current y (displaced)
-}
+const CURSOR_RADIUS = 150;
+const CONNECTION_DIST = 85;
+const PARTICLE_COUNT = 12;
+const FLOW_STRENGTH = 10;
 
 interface Particle {
   x: number; y: number; vx: number; vy: number; r: number; alpha: number;
@@ -24,7 +17,6 @@ interface Particle {
 export default function GridBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -999, y: -999 });
-  const dotsRef = useRef<GridDot[]>([]);
   const particlesRef = useRef<Particle[]>([]);
   const rafRef = useRef<number>(0);
   const [isDark, setIsDark] = useState(false);
@@ -37,73 +29,58 @@ export default function GridBackground() {
     return () => observer.disconnect();
   }, []);
 
-  const buildGrid = useCallback((w: number, h: number) => {
-    const dots: GridDot[] = [];
-    const cols = Math.ceil(w / GRID_SPACING) + 1;
-    const rows = Math.ceil(h / GRID_SPACING) + 1;
-    for (let c = 0; c < cols; c++) {
-      for (let r = 0; r < rows; r++) {
-        const x = c * GRID_SPACING;
-        const y = r * GRID_SPACING;
-        dots.push({ ox: x, oy: y, x, y });
-      }
-    }
-    dotsRef.current = dots;
-
-    const particles: Particle[] = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 1.8 + 0.8, alpha: Math.random() * 0.35 + 0.1,
-      });
-    }
-    particlesRef.current = particles;
-  }, []);
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let w = 0, h = 0;
+
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      const w = window.innerWidth;
-      const h = document.documentElement.scrollHeight;
+      w = window.innerWidth;
+      h = window.innerHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      buildGrid(w, h);
+
+      // Init particles for viewport only
+      const particles: Particle[] = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 1.5 + 0.8, alpha: Math.random() * 0.3 + 0.1,
+        });
+      }
+      particlesRef.current = particles;
     };
 
     resize();
     window.addEventListener("resize", resize);
 
-    // Re-measure on scroll height changes (content loads)
-    const resizeObserver = new ResizeObserver(() => resize());
-    resizeObserver.observe(document.documentElement);
-
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY + window.scrollY };
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+    const handleMouseLeave = () => {
+      mouseRef.current = { x: -999, y: -999 };
     };
 
     window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    // Persistent displacement map for smooth spring-back
+    const displacements = new Map<string, { dx: number; dy: number }>();
 
     const draw = () => {
-      const w = canvas.width / (window.devicePixelRatio || 1);
-      const h = canvas.height / (window.devicePixelRatio || 1);
       ctx.clearRect(0, 0, w, h);
 
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
       const scrollY = window.scrollY;
-
-      // Viewport-relative mouse for culling
-      const viewTop = scrollY;
-      const viewBottom = scrollY + window.innerHeight;
 
       // Theme colors
       const dotCol = isDark ? "rgba(100,181,246," : "rgba(14,165,233,";
@@ -113,61 +90,74 @@ export default function GridBackground() {
 
       const activeDots: { x: number; y: number; intensity: number }[] = [];
 
-      // Update and draw grid dots
-      for (const dot of dotsRef.current) {
-        // Only process dots near viewport (performance)
-        if (dot.oy < viewTop - 200 || dot.oy > viewBottom + 200) continue;
+      // Calculate grid offset so dots scroll with page
+      const offsetY = -(scrollY % GRID_SPACING);
+      const cols = Math.ceil(w / GRID_SPACING) + 1;
+      const rows = Math.ceil(h / GRID_SPACING) + 2;
 
-        const dist = Math.hypot(dot.ox - mx, dot.oy - my);
-        const inRange = dist < CURSOR_RADIUS;
-        const intensity = inRange ? 1 - dist / CURSOR_RADIUS : 0;
+      for (let c = 0; c <= cols; c++) {
+        for (let r = 0; r <= rows; r++) {
+          const ox = c * GRID_SPACING;
+          const oy = r * GRID_SPACING + offsetY;
 
-        // Flow: displace dots away from cursor
-        if (inRange && dist > 1) {
-          const angle = Math.atan2(dot.oy - my, dot.ox - mx);
-          const displacement = intensity * intensity * FLOW_STRENGTH;
-          dot.x = dot.ox + Math.cos(angle) * displacement;
-          dot.y = dot.oy + Math.sin(angle) * displacement;
-        } else {
-          // Spring back smoothly
-          dot.x += (dot.ox - dot.x) * 0.08;
-          dot.y += (dot.oy - dot.y) * 0.08;
-        }
+          if (oy < -GRID_SPACING || oy > h + GRID_SPACING) continue;
 
-        const baseAlpha = isDark ? 0.06 : 0.1;
-        const alpha = baseAlpha + intensity * (isDark ? 0.6 : 0.5);
-        const radius = DOT_BASE_RADIUS + intensity * 2.5;
+          const key = `${c}_${r}`;
+          let disp = displacements.get(key);
+          if (!disp) { disp = { dx: 0, dy: 0 }; displacements.set(key, disp); }
 
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${dotCol}${alpha})`;
-        ctx.fill();
+          const dist = Math.hypot(ox - mx, oy - my);
+          const inRange = dist < CURSOR_RADIUS;
+          const intensity = inRange ? 1 - dist / CURSOR_RADIUS : 0;
 
-        if (intensity > 0.25) {
-          // Glow
+          // Flow displacement
+          if (inRange && dist > 1) {
+            const angle = Math.atan2(oy - my, ox - mx);
+            const target = intensity * intensity * FLOW_STRENGTH;
+            disp.dx += (Math.cos(angle) * target - disp.dx) * 0.15;
+            disp.dy += (Math.sin(angle) * target - disp.dy) * 0.15;
+          } else {
+            disp.dx *= 0.9;
+            disp.dy *= 0.9;
+          }
+
+          const x = ox + disp.dx;
+          const y = oy + disp.dy;
+
+          const baseAlpha = isDark ? 0.05 : 0.08;
+          const alpha = baseAlpha + intensity * (isDark ? 0.55 : 0.45);
+          const radius = DOT_BASE_RADIUS + intensity * 2;
+
           ctx.beginPath();
-          ctx.arc(dot.x, dot.y, radius + 5, 0, Math.PI * 2);
-          const grad = ctx.createRadialGradient(dot.x, dot.y, 0, dot.x, dot.y, radius + 5);
-          grad.addColorStop(0, `${glowCol}${intensity * 0.25})`);
-          grad.addColorStop(1, `${glowCol}0)`);
-          ctx.fillStyle = grad;
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fillStyle = `${dotCol}${alpha})`;
           ctx.fill();
-          activeDots.push({ x: dot.x, y: dot.y, intensity });
+
+          if (intensity > 0.3) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius + 4, 0, Math.PI * 2);
+            const grad = ctx.createRadialGradient(x, y, 0, x, y, radius + 4);
+            grad.addColorStop(0, `${glowCol}${intensity * 0.2})`);
+            grad.addColorStop(1, `${glowCol}0)`);
+            ctx.fillStyle = grad;
+            ctx.fill();
+            activeDots.push({ x, y, intensity });
+          }
         }
       }
 
-      // Connections between active dots
+      // Connections
       for (let i = 0; i < activeDots.length; i++) {
         for (let j = i + 1; j < activeDots.length; j++) {
           const a = activeDots[i], b = activeDots[j];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < CONNECTION_DIST) {
-            const alpha = (1 - d / CONNECTION_DIST) * Math.min(a.intensity, b.intensity) * 0.5;
+            const alpha = (1 - d / CONNECTION_DIST) * Math.min(a.intensity, b.intensity) * 0.4;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
             ctx.strokeStyle = `${lineCol}${alpha})`;
-            ctx.lineWidth = 0.7;
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
@@ -175,31 +165,27 @@ export default function GridBackground() {
 
       // Cursor glow
       if (mx > 0 && my > 0) {
-        const grad = ctx.createRadialGradient(mx, my, 0, mx, my, CURSOR_RADIUS * 0.5);
-        grad.addColorStop(0, `${glowCol}${isDark ? 0.06 : 0.04})`);
+        const grad = ctx.createRadialGradient(mx, my, 0, mx, my, CURSOR_RADIUS * 0.4);
+        grad.addColorStop(0, `${glowCol}${isDark ? 0.05 : 0.035})`);
         grad.addColorStop(1, `${glowCol}0)`);
         ctx.beginPath();
-        ctx.arc(mx, my, CURSOR_RADIUS * 0.5, 0, Math.PI * 2);
+        ctx.arc(mx, my, CURSOR_RADIUS * 0.4, 0, Math.PI * 2);
         ctx.fillStyle = grad;
         ctx.fill();
       }
 
-      // Ambient particles (only in viewport)
+      // Particles
       for (const p of particlesRef.current) {
         p.x += p.vx;
         p.y += p.vy;
         if (p.x < 0 || p.x > w) p.vx *= -1;
         if (p.y < 0 || p.y > h) p.vy *= -1;
 
-        // Skip if not in viewport
-        if (p.y < viewTop - 100 || p.y > viewBottom + 100) continue;
-
         const pdist = Math.hypot(p.x - mx, p.y - my);
-        if (pdist < CURSOR_RADIUS * 0.7) {
+        if (pdist < CURSOR_RADIUS * 0.6) {
           const angle = Math.atan2(p.y - my, p.x - mx);
-          const force = (1 - pdist / (CURSOR_RADIUS * 0.7)) * 0.3;
-          p.vx += Math.cos(angle) * force;
-          p.vy += Math.sin(angle) * force;
+          p.vx += Math.cos(angle) * 0.15;
+          p.vy += Math.sin(angle) * 0.15;
         }
         p.vx *= 0.99;
         p.vy *= 0.99;
@@ -219,15 +205,15 @@ export default function GridBackground() {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);
-      resizeObserver.disconnect();
+      document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [isDark, buildGrid]);
+  }, [isDark]);
 
   return (
     <canvas
       ref={canvasRef}
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
