@@ -7,9 +7,9 @@ import Simulation2 from "@/components/Simulation2";
 import Simulation3 from "@/components/Simulation3";
 import VoiceShowcase from "@/components/VoiceShowcase";
 import AdvantagesSection from "@/components/AdvantagesSection";
-import IntelligenceGrid from "@/components/IntelligenceGrid";
 import Footer from "@/components/Footer";
 import LiveChatbot from "@/components/LiveChatbot";
+import GridBackground from "@/components/GridBackground";
 
 const Divider = () => (
   <div className="section-divider" />
@@ -18,14 +18,15 @@ const Divider = () => (
 export default function Home() {
   return (
     <main style={{ position: "relative" }}>
+      {/* Full-site interactive grid background */}
+      <GridBackground />
+
       <Navigation />
       <HeroSection />
       <Divider />
       <AboutProfile />
       <Divider />
       <ProblemSection />
-      <Divider />
-      <IntelligenceGrid />
       <Divider />
 
       {/* ── Simulations Hub ── */}
