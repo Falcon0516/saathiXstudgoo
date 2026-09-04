@@ -26,7 +26,24 @@ export async function speakWithSarvam(options: TTSOptions): Promise<HTMLAudioEle
   let { text, language_code = "en-IN", speaker = "shubh", pace = 1.0 } = options;
 
   // Pre-process text for better TTS pronunciation
-  text = text.replace(/\bkm\b/gi, "kilometers");
+  // Sarvam's engine spells out hyphenated words and abbreviations letter-by-letter.
+  // This pipeline converts them to speech-friendly forms.
+  text = text
+    // Expand common abbreviations BEFORE removing hyphens
+    .replace(/\btier[-\s]?1\b/gi, "tier one")
+    .replace(/\btier[-\s]?2\b/gi, "tier two")
+    .replace(/\btier[-\s]?3\b/gi, "tier three")
+    .replace(/\b24\/7\b/g, "twenty four seven")
+    .replace(/\bkm\b/gi, "kilometers")
+    .replace(/\b(\d+)-kilometer\b/gi, "$1 kilometer")
+    .replace(/\b(\d+)-hour\b/gi, "$1 hour")
+    .replace(/\bgeo[-\s]?fence\b/gi, "geo fence")
+    .replace(/\bAM\b/g, "A M")
+    .replace(/\bPM\b/g, "P M")
+    .replace(/\bGPS\b/g, "G P S")
+    .replace(/\bAI\b/g, "A I")
+    // Replace remaining hyphens between words with spaces (avoids letter-by-letter)
+    .replace(/(\w)-(\w)/g, "$1 $2");
 
   try {
     stopSarvamAudio();
