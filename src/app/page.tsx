@@ -7,6 +7,7 @@ import Simulation2 from "@/components/Simulation2";
 import Simulation3 from "@/components/Simulation3";
 import VoiceShowcase from "@/components/VoiceShowcase";
 import AdvantagesSection from "@/components/AdvantagesSection";
+import IntelligenceGrid from "@/components/IntelligenceGrid";
 import Footer from "@/components/Footer";
 import LiveChatbot from "@/components/LiveChatbot";
 
@@ -23,6 +24,8 @@ export default function Home() {
       <AboutProfile />
       <Divider />
       <ProblemSection />
+      <Divider />
+      <IntelligenceGrid />
       <Divider />
 
       {/* ── Simulations Hub ── */}
