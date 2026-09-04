@@ -213,7 +213,7 @@ export default function VoiceShowcase() {
             position: "relative", left: "50%", transform: "translateX(-50%)"
           }}
         >
-          <Mic style={{ width: 16, height: 16, color: "#30D158" }} />
+          <Mic style={{ width: 16, height: 16, color: "#0EA5E9" }} />
           <span style={{ fontSize: 13, color: "var(--text-secondary)", fontWeight: 500 }}>
             30+ voice personas available across 11 Indian languages — tunable for pace, tone, and regional accent.
           </span>

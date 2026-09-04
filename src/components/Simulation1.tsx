@@ -302,7 +302,7 @@ export default function Simulation1() {
                   </div>
                   <div style={{ padding: 14, borderRadius: 14, background: "rgba(0,0,0,0.2)" }}>
                     <div style={{ fontSize: 11, color: "var(--text-secondary)", marginBottom: 4 }}>Pay Rate</div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#30D158" }}>₹160/hr • 6-Hour Shift</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#0EA5E9" }}>₹160/hr • 6-Hour Shift</div>
                   </div>
                   <div style={{ padding: 14, borderRadius: 14, background: "rgba(0,0,0,0.2)" }}>
                     <div style={{ fontSize: 11, color: "var(--text-secondary)", marginBottom: 4 }}>Schedule</div>
@@ -361,9 +361,9 @@ export default function Simulation1() {
                   <motion.div key={c.name} initial={{ opacity: 0, x: -20 }} animate={i < candidateReveal ? { opacity: 1, x: 0 } : { opacity: 0.2, x: 0 }} transition={{ duration: 0.3 }}
                     style={{ display: "flex", alignItems: "center", gap: 16, padding: 16, borderRadius: 16, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)" }}>
                     <div style={{ width: 36, height: 36, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800,
-                      background: i < candidateReveal ? (c.passed ? "rgba(48,209,88,0.15)" : "rgba(255,69,58,0.1)") : "rgba(255,255,255,0.05)",
-                      color: i < candidateReveal ? (c.passed ? "#30D158" : "#FF453A") : "var(--text-secondary)",
-                      border: `1px solid ${i < candidateReveal ? (c.passed ? "rgba(48,209,88,0.3)" : "rgba(255,69,58,0.2)") : "transparent"}`
+                      background: i < candidateReveal ? (c.passed ? "rgba(14,165,233,0.15)" : "rgba(239,68,68,0.1)") : "rgba(255,255,255,0.05)",
+                      color: i < candidateReveal ? (c.passed ? "#0EA5E9" : "#EF4444") : "var(--text-secondary)",
+                      border: `1px solid ${i < candidateReveal ? (c.passed ? "rgba(14,165,233,0.3)" : "rgba(239,68,68,0.2)") : "transparent"}`
                     }}>
                       {i < candidateReveal ? (c.passed ? "✓" : "✗") : "..."}
                     </div>
@@ -373,8 +373,8 @@ export default function Simulation1() {
                     </div>
                     {i < candidateReveal && (
                       <div style={{ fontSize: 11, fontWeight: 600, padding: "4px 12px", borderRadius: 12,
-                        background: c.passed ? "rgba(48,209,88,0.1)" : "rgba(255,69,58,0.1)",
-                        color: c.passed ? "#30D158" : "#FF453A"
+                        background: c.passed ? "rgba(14,165,233,0.1)" : "rgba(239,68,68,0.1)",
+                        color: c.passed ? "#0EA5E9" : "#EF4444"
                       }}>
                         {c.passed ? `Within Radius (${c.distance} km)` : `Outside Boundary (${c.distance} km)`}
                       </div>
@@ -408,11 +408,11 @@ export default function Simulation1() {
                     <motion.div key={c.name} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={spring}
                       style={{ position: "absolute", zIndex: 10, top: `${y}%`, left: `${x}%`, transform: "translate(-50%, -50%)", cursor: "pointer" }} onClick={() => setSelectedCandidate(i)}>
                       <div style={{ width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800,
-                        background: c.passed ? "#30D158" : "#FF453A", color: "white", boxShadow: `0 0 16px ${c.passed ? "rgba(48,209,88,0.4)" : "rgba(255,69,58,0.4)"}` }}>
+                        background: c.passed ? "#0EA5E9" : "#EF4444", color: "white", boxShadow: `0 0 16px ${c.passed ? "rgba(14,165,233,0.4)" : "rgba(239,68,68,0.4)"}` }}>
                         {c.name.charAt(0)}
                       </div>
                       <div style={{ position: "absolute", bottom: -24, left: "50%", transform: "translateX(-50%)", whiteSpace: "nowrap" }}>
-                        <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10, background: c.passed ? "rgba(48,209,88,0.15)" : "rgba(255,69,58,0.15)", color: c.passed ? "#30D158" : "#FF453A" }}>
+                        <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10, background: c.passed ? "rgba(14,165,233,0.15)" : "rgba(239,68,68,0.15)", color: c.passed ? "#0EA5E9" : "#EF4444" }}>
                           {c.distance} km
                         </span>
                       </div>
@@ -433,8 +433,8 @@ export default function Simulation1() {
                   </div>
                   <div style={{ fontSize: 14, fontWeight: 700, color: "white", marginBottom: 4 }}>StudGoo Smart Relay</div>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
-                    <Shield style={{ width: 12, height: 12, color: "#30D158" }} />
-                    <span style={{ fontSize: 11, color: "#30D158" }}>Saathi Cognitive Engine</span>
+                    <Shield style={{ width: 12, height: 12, color: "#0EA5E9" }} />
+                    <span style={{ fontSize: 11, color: "#0EA5E9" }}>Saathi Cognitive Engine</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2, height: 32, marginBottom: 16 }}>
                     {Array.from({ length: 12 }).map((_, i) => (<span key={i} className="waveform-bar" style={{ background: "#2997FF" }} />))}
@@ -445,7 +445,7 @@ export default function Simulation1() {
 
               <div style={{ padding: 24, borderRadius: 24, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", width: "100%", maxWidth: 560 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-                  <div className="glow-pulse-blue" style={{ width: 8, height: 8, borderRadius: "50%", background: "#30D158" }} />
+                  <div className="glow-pulse-blue" style={{ width: 8, height: 8, borderRadius: "50%", background: "#0EA5E9" }} />
                   <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Live Kinetic Transcript</span>
                 </div>
                 <div style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6, minHeight: 80 }}>
@@ -454,7 +454,7 @@ export default function Simulation1() {
                 </div>
                 {transcript.length > 100 && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-                    <span style={{ color: "#30D158", fontWeight: 700, fontSize: 14 }}>Rohan: </span>
+                    <span style={{ color: "#0EA5E9", fontWeight: 700, fontSize: 14 }}>Rohan: </span>
                     <span style={{ fontSize: 14, color: "var(--text-secondary)" }}>&quot;Yes! I can make it. Send me the location link.&quot;</span>
                   </motion.div>
                 )}
@@ -467,7 +467,7 @@ export default function Simulation1() {
             <motion.div key="stage5" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={spring} style={{ display: "flex", flexDirection: "column", gap: 32, maxWidth: 560, margin: "0 auto" }}>
               <div style={{ padding: 32, borderRadius: 28, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 16, background: "linear-gradient(135deg, #30D158, #2997FF)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 16, background: "linear-gradient(135deg, #0EA5E9, #2997FF)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <Award style={{ width: 24, height: 24, color: "white" }} />
                   </div>
                   <div>
@@ -476,7 +476,7 @@ export default function Simulation1() {
                   </div>
                 </div>
                 {[
-                  { label: "Commute Proximity", value: "2.1 km", score: 98, color: "#30D158" },
+                  { label: "Commute Proximity", value: "2.1 km", score: 98, color: "#0EA5E9" },
                   { label: "Availability Timing", value: "Immediate / Confirmed", score: 100, color: "#2997FF" },
                   { label: "Category Skill Match", value: "Level 4 Barista", score: 95, color: "#BF48FF" },
                 ].map((metric, i) => (
@@ -495,9 +495,9 @@ export default function Simulation1() {
                   </motion.div>
                 ))}
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1 }}
-                  style={{ marginTop: 24, padding: 20, borderRadius: 20, background: "rgba(48,209,88,0.1)", border: "1px solid rgba(48,209,88,0.2)", textAlign: "center" }}>
+                  style={{ marginTop: 24, padding: 20, borderRadius: 20, background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.2)", textAlign: "center" }}>
                   <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 8 }}>Composite Saathi Match Index</div>
-                  <div style={{ fontSize: 40, fontWeight: 900, color: "#30D158" }} className="text-glow-emerald">97.6%</div>
+                  <div style={{ fontSize: 40, fontWeight: 900, color: "#0EA5E9" }} className="text-glow-emerald">97.6%</div>
                 </motion.div>
               </div>
             </motion.div>
@@ -510,21 +510,21 @@ export default function Simulation1() {
                 <motion.div initial={{ rotateX: 15, scale: 0.9 }} animate={{ rotateX: 4, scale: 1 }} transition={{ duration: 0.6 }} className="phone-frame phone-glow-emerald" style={{ width: 240, height: 480 }}>
                   <div className="phone-screen" style={{ background: "linear-gradient(180deg, #000 0%, #1D1D1F 100%)", display: "flex", flexDirection: "column", padding: "44px 16px 16px" }}>
                     <motion.div initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5, ...spring }}
-                      style={{ background: "rgba(48,209,88,0.15)", border: "1px solid rgba(48,209,88,0.25)", borderRadius: 16, padding: 12, marginBottom: 16 }}>
+                      style={{ background: "rgba(14,165,233,0.15)", border: "1px solid rgba(14,165,233,0.25)", borderRadius: 16, padding: 12, marginBottom: 16 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <MessageSquare style={{ width: 14, height: 14, color: "#30D158" }} />
-                        <span style={{ fontSize: 12, fontWeight: 700, color: "#30D158" }}>WhatsApp • StudGoo Bot</span>
+                        <MessageSquare style={{ width: 14, height: 14, color: "#0EA5E9" }} />
+                        <span style={{ fontSize: 12, fontWeight: 700, color: "#0EA5E9" }}>WhatsApp • StudGoo Bot</span>
                       </div>
                       <p style={{ fontSize: 10, color: "var(--text-secondary)", margin: 0 }}>Tap to verify your shift slot</p>
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.2, duration: 0.4 }}
-                      style={{ background: "rgba(48,209,88,0.08)", border: "1px solid rgba(48,209,88,0.15)", borderRadius: 20, borderTopLeftRadius: 4, padding: 16, marginTop: "auto", marginBottom: 16 }}>
+                      style={{ background: "rgba(14,165,233,0.08)", border: "1px solid rgba(14,165,233,0.15)", borderRadius: 20, borderTopLeftRadius: 4, padding: 16, marginTop: "auto", marginBottom: 16 }}>
                       <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: 12, marginTop: 0 }}>
                         Hey Rohan 👋 tap below to confirm your live GPS location and lock your shift slot at Indiranagar:
                       </p>
                       <motion.button animate={{ scale: [1, 1.03, 1] }} transition={{ repeat: Infinity, duration: 2 }}
-                        style={{ width: "100%", padding: "10px 0", background: "#30D158", color: "white", fontSize: 13, fontWeight: 700, borderRadius: 12, border: "none" }}>
+                        style={{ width: "100%", padding: "10px 0", background: "#0EA5E9", color: "white", fontSize: 13, fontWeight: 700, borderRadius: 12, border: "none" }}>
                         🔗 Verify Shift #SG-884
                       </motion.button>
                     </motion.div>
@@ -538,8 +538,8 @@ export default function Simulation1() {
               </div>
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
-                style={{ padding: "12px 24px", borderRadius: 16, background: "rgba(48,209,88,0.1)", border: "1px solid rgba(48,209,88,0.2)" }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#30D158" }}>✓ Location verified — GPS coordinates captured</div>
+                style={{ padding: "12px 24px", borderRadius: 16, background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.2)" }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#0EA5E9" }}>✓ Location verified — GPS coordinates captured</div>
               </motion.div>
             </motion.div>
           )}
@@ -548,12 +548,12 @@ export default function Simulation1() {
           {stage === 7 && (
             <motion.div key="stage7" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={spring} style={{ display: "flex", flexDirection: "column", gap: 32, maxWidth: 560, margin: "0 auto" }}>
               <motion.div 
-                style={{ padding: 32, borderRadius: 24, background: "linear-gradient(135deg, rgba(48,209,88,0.1), rgba(41,151,255,0.05))", border: "1px solid rgba(48,209,88,0.2)", textAlign: "center" }}>
+                style={{ padding: 32, borderRadius: 24, background: "linear-gradient(135deg, rgba(14,165,233,0.1), rgba(41,151,255,0.05))", border: "1px solid rgba(14,165,233,0.2)", textAlign: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 8 }}>
-                  <CheckCircle2 style={{ width: 28, height: 28, color: "#30D158" }} />
+                  <CheckCircle2 style={{ width: 28, height: 28, color: "#0EA5E9" }} />
                   <span style={{ fontSize: 24, fontWeight: 900, color: "var(--text-primary)" }}>CANDIDATE AUTO-ALLOCATED</span>
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: "#30D158", marginBottom: 24 }}>Total Time: {formatTimer(timer)}</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "#0EA5E9", marginBottom: 24 }}>Total Time: {formatTimer(timer)}</div>
                 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, fontSize: 14 }}>
                   <div style={{ background: "rgba(0,0,0,0.2)", padding: 16, borderRadius: 16 }}>
@@ -603,9 +603,9 @@ export default function Simulation1() {
             const isPast = stage > i;
             return (
               <div key={label} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: isActive ? "#2997FF" : isPast ? "#30D158" : "var(--elevated)", boxShadow: isActive ? "0 0 8px rgba(41,151,255,0.6)" : "none", transition: "all 0.3s" }} />
-                <span style={{ fontSize: 10, fontWeight: 600, color: isActive ? "#2997FF" : isPast ? "#30D158" : "var(--text-tertiary)" }}>{label}</span>
-                {i < stagesLabel.length - 1 && <div style={{ width: 12, height: 1, background: isPast ? "#30D158" : "var(--elevated)", transition: "background 0.3s" }} />}
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: isActive ? "#2997FF" : isPast ? "#0EA5E9" : "var(--elevated)", boxShadow: isActive ? "0 0 8px rgba(41,151,255,0.6)" : "none", transition: "all 0.3s" }} />
+                <span style={{ fontSize: 10, fontWeight: 600, color: isActive ? "#2997FF" : isPast ? "#0EA5E9" : "var(--text-tertiary)" }}>{label}</span>
+                {i < stagesLabel.length - 1 && <div style={{ width: 12, height: 1, background: isPast ? "#0EA5E9" : "var(--elevated)", transition: "background 0.3s" }} />}
               </div>
             );
           })}

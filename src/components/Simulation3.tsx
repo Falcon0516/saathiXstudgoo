@@ -24,14 +24,14 @@ const pills = {
   B: {
     icon: CreditCard, label: "Student Query",
     query: "When will my Friday cafe payout be credited?",
-    color: "#30D158",
+    color: "#0EA5E9",
     retrievalSteps: ["Querying Payout Ledger...", "Batch: Bank Clearing Batch #883", "Status: Processing — ETA Today 4:00 PM"],
     response: "Hi Priya, your Friday payout of ₹2,400 from Third Wave Roasters is currently in Bank Clearing Batch 883. It will be credited to your account by 4 PM today.",
   },
   C: {
     icon: HelpCircle, label: "General FAQ",
     query: "What are the verification requirements?",
-    color: "#BF48FF",
+    color: "#6366F1",
     retrievalSteps: ["Querying Verification Policy...", "Loading: Student Onboarding Requirements", "Result: 3-step verification process"],
     response: "To get verified on StudGoo, you need three things: a valid college ID, an Aadhaar-linked phone number for identity verification, and a completed skills assessment. The whole process takes under 10 minutes.",
   },
@@ -199,7 +199,7 @@ export default function Simulation3() {
   };
 
   const currentPill = activePill ? pills[activePill] : null;
-  const orbColor = phase === "idle" ? "#2997FF" : phase === "ingesting" || phase === "retrieving" ? "#BF48FF" : "#30D158";
+  const orbColor = phase === "idle" ? "#2997FF" : phase === "ingesting" || phase === "retrieving" ? "#6366F1" : "#0EA5E9";
   const phases = ["Idle", "Ingesting", "Retrieving", "Speaking", "Resolved", "Summary"];
   const phaseMap: Record<string, Phase> = { Idle: "idle", Ingesting: "ingesting", Retrieving: "retrieving", Speaking: "speaking", Resolved: "resolved", Summary: "summary" };
 
@@ -214,14 +214,14 @@ export default function Simulation3() {
       <div style={{ padding: "32px 36px 0", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#30D158" }} className="glow-pulse-blue" />
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#30D158" }}>Simulation 3</span>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#0EA5E9" }} className="glow-pulse-blue" />
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#0EA5E9" }}>Simulation 3</span>
           </div>
           <h3 style={{ fontSize: 26, fontWeight: 900, color: "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 6 }}>24/7 Voice AI Support</h3>
           <p style={{ fontSize: 14, color: "var(--text-secondary)", maxWidth: 420 }}>Click a scenario to watch Saathi resolve it with live context retrieval.</p>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 12, background: "rgba(48,209,88,0.08)", border: "1px solid rgba(48,209,88,0.15)" }}>
-          <Headphones style={{ width: 13, height: 13, color: "#30D158" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 12, background: "rgba(14,165,233,0.08)", border: "1px solid rgba(14,165,233,0.15)" }}>
+          <Headphones style={{ width: 13, height: 13, color: "#0EA5E9" }} />
           <span style={{ fontSize: 11, color: "var(--text-secondary)", fontWeight: 600 }}>Cognitive Engine</span>
         </div>
       </div>
@@ -233,7 +233,7 @@ export default function Simulation3() {
           text={narratorText} 
           isPlaying={narratorPlaying} 
           visible={!!narratorText} 
-          accentColor="#FF26B9"
+          accentColor="#F43F5E"
         />
 
         {/* Cognitive Orb */}
@@ -340,7 +340,7 @@ export default function Simulation3() {
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
                   <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1 }}
-                    style={{ width: 6, height: 6, borderRadius: "50%", background: "#BF48FF" }} />
+                    style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366F1" }} />
                   <span style={{ fontSize: 10, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Dynamic Context Retrieval</span>
                 </div>
                 {currentPill.retrievalSteps.map((step, i) => (
@@ -350,10 +350,10 @@ export default function Simulation3() {
                     transition={{ duration: 0.3 }}
                     style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                     {i < retrievalStep - 1 ? (
-                      <CheckCircle2 style={{ width: 12, height: 12, color: "#30D158", flexShrink: 0 }} />
+                      <CheckCircle2 style={{ width: 12, height: 12, color: "#0EA5E9", flexShrink: 0 }} />
                     ) : i === retrievalStep - 1 ? (
                       <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}>
-                        <Clock style={{ width: 12, height: 12, color: "#BF48FF", flexShrink: 0 }} />
+                        <Clock style={{ width: 12, height: 12, color: "#6366F1", flexShrink: 0 }} />
                       </motion.div>
                     ) : null}
                     <span style={{ color: "var(--text-secondary)" }}>{step}</span>
@@ -377,11 +377,11 @@ export default function Simulation3() {
                   {phase === "speaking" && (
                     <div style={{ display: "flex", gap: 1.5, height: 16 }}>
                       {Array.from({ length: 6 }).map((_, i) => (
-                        <span key={i} className="waveform-bar" style={{ background: "#30D158", width: 2 }} />
+                        <span key={i} className="waveform-bar" style={{ background: "#0EA5E9", width: 2 }} />
                       ))}
                     </div>
                   )}
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#30D158", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#0EA5E9", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                     {phase === "speaking" ? "Speaking..." : "Response Complete"}
                   </span>
                 </div>
@@ -401,8 +401,8 @@ export default function Simulation3() {
               style={{ width: "100%", maxWidth: 520 }}>
               <div style={{
                 padding: 24, borderRadius: 20,
-                background: "linear-gradient(135deg, rgba(48,209,88,0.05), rgba(41,151,255,0.03))",
-                border: "1px solid rgba(48,209,88,0.12)",
+                background: "linear-gradient(135deg, rgba(14,165,233,0.05), rgba(41,151,255,0.03))",
+                border: "1px solid rgba(14,165,233,0.12)",
               }}>
                 <h4 style={{ fontSize: 18, fontWeight: 900, color: "var(--text-primary)", textAlign: "center", letterSpacing: "-0.02em", marginBottom: 4 }}>
                   Instant Resolution. Zero Human Cost.
@@ -412,9 +412,9 @@ export default function Simulation3() {
                 </p>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
                   {[
-                    { label: "Avg Wait", value: "0 sec", color: "#30D158" },
+                    { label: "Avg Wait", value: "0 sec", color: "#0EA5E9" },
                     { label: "Overhead Saved", value: "100%", color: "#2997FF" },
-                    { label: "Resolution", value: "<2 sec", color: "#BF48FF" },
+                    { label: "Resolution", value: "<2 sec", color: "#6366F1" },
                   ].map((m) => (
                     <div key={m.label} style={{ textAlign: "center", padding: 12, borderRadius: 14, background: "rgba(0,0,0,0.4)" }}>
                       <div style={{ fontSize: 20, fontWeight: 900, color: m.color }}>{m.value}</div>
@@ -445,14 +445,14 @@ export default function Simulation3() {
             Voice
           </motion.button>
           <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} onClick={() => setShowContext(!showContext)}
-            style={{ padding: "8px 18px", fontSize: 12, fontWeight: 600, borderRadius: 12, border: "none", cursor: "pointer", background: showContext ? "rgba(191,72,255,0.08)" : "rgba(255,255,255,0.04)", color: showContext ? "#BF48FF" : "var(--text-secondary)" }}>
+            style={{ padding: "8px 18px", fontSize: 12, fontWeight: 600, borderRadius: 12, border: "none", cursor: "pointer", background: showContext ? "rgba(99,102,241,0.08)" : "rgba(255,255,255,0.04)", color: showContext ? "#6366F1" : "var(--text-secondary)" }}>
             {showContext ? <Eye style={{ width: 12, height: 12, display: "inline", verticalAlign: "middle", marginRight: 4 }} /> : <EyeOff style={{ width: 12, height: 12, display: "inline", verticalAlign: "middle", marginRight: 4 }} />}
             Context
           </motion.button>
           <div style={{ width: 1, height: 24, background: "rgba(255,255,255,0.1)", margin: "0 8px" }} />
           <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
             onClick={() => { setNarratorEnabled(!narratorEnabled); if (narratorEnabled) stopSarvamAudio(); }}
-            style={{ padding: "8px 18px", fontSize: 12, fontWeight: 600, borderRadius: 12, border: "none", cursor: "pointer", background: narratorEnabled ? "rgba(255,38,185,0.08)" : "rgba(255,255,255,0.04)", color: narratorEnabled ? "#FF26B9" : "var(--text-secondary)" }}>
+            style={{ padding: "8px 18px", fontSize: 12, fontWeight: 600, borderRadius: 12, border: "none", cursor: "pointer", background: narratorEnabled ? "rgba(244,63,94,0.08)" : "rgba(255,255,255,0.04)", color: narratorEnabled ? "#F43F5E" : "var(--text-secondary)" }}>
             {narratorEnabled ? <Mic style={{ width: 12, height: 12, display: "inline", verticalAlign: "middle", marginRight: 4 }} /> : <MicOff style={{ width: 12, height: 12, display: "inline", verticalAlign: "middle", marginRight: 4 }} />}
             Narrator
           </motion.button>
@@ -467,13 +467,13 @@ export default function Simulation3() {
               <div key={label} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                 <div style={{
                   width: 8, height: 8, borderRadius: "50%",
-                  background: isActive ? "#30D158" : isPast ? "#30D158" : "var(--elevated)",
-                  boxShadow: isActive ? "0 0 8px rgba(48,209,88,0.6)" : "none",
+                  background: isActive ? "#0EA5E9" : isPast ? "#0EA5E9" : "var(--elevated)",
+                  boxShadow: isActive ? "0 0 8px rgba(14,165,233,0.6)" : "none",
                   transition: "all 0.3s",
                 }} />
-                <span style={{ fontSize: 10, fontWeight: 600, color: isActive ? "#30D158" : isPast ? "#30D158" : "var(--text-tertiary)" }}>{label}</span>
+                <span style={{ fontSize: 10, fontWeight: 600, color: isActive ? "#0EA5E9" : isPast ? "#0EA5E9" : "var(--text-tertiary)" }}>{label}</span>
                 {i < phases.length - 1 && (
-                  <div style={{ width: 12, height: 1, background: isPast ? "#30D158" : "var(--elevated)", transition: "background 0.3s" }} />
+                  <div style={{ width: 12, height: 1, background: isPast ? "#0EA5E9" : "var(--elevated)", transition: "background 0.3s" }} />
                 )}
               </div>
             );
